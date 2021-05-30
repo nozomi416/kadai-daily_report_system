@@ -37,6 +37,7 @@ public class TopPageIndexServlet extends HttpServlet {
 
         Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
 
+        //自分の日報を表示
         int page;
         try {
             page = Integer.parseInt(request.getParameter("page"));
@@ -64,6 +65,7 @@ public class TopPageIndexServlet extends HttpServlet {
             request.getSession().removeAttribute("flush");
         }
 
+        //JSPに送る
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/index.jsp");
         rd.forward(request, response);
     }

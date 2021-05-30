@@ -43,7 +43,7 @@ public class EmployeesEditServlet extends HttpServlet {
         //IDはセッションスコープに格納
         request.getSession().setAttribute("employee_id", e.getId());
 
-        //JSPに飛ばす
+        //JSPに送る
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/edit.jsp");
         rd.forward(request, response);
     }

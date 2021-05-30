@@ -44,7 +44,6 @@ public class EmployeesCreateServlet extends HttpServlet {
             //Employeeのインスタンス化
             Employee e = new Employee();
 
-            //データを代入
             e.setCode(request.getParameter("code"));
             e.setName(request.getParameter("name"));
             e.setPassword(
@@ -71,7 +70,7 @@ public class EmployeesCreateServlet extends HttpServlet {
                 request.setAttribute("employee", e);
                 request.setAttribute("errors", errors);
 
-                //JSPに飛ばす
+                //JSPに送る
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/new.jsp");
                 rd.forward(request, response);
             } else {

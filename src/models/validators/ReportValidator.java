@@ -22,6 +22,7 @@ public class ReportValidator {
         return errors;
     }
 
+    //タイトルの必須入力チェック
     private static String _validateTitle(String title) {
         if(title == null || title.equals("")) {
             return "タイトルを入力してください。";
@@ -30,6 +31,7 @@ public class ReportValidator {
         return "";
     }
 
+    //内容の必須入力チェック
     private static String _validateContent(String content) {
         if(content == null || content.equals("")) {
             return "内容を入力してください。";

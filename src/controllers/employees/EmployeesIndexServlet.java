@@ -59,7 +59,7 @@ public class EmployeesIndexServlet extends HttpServlet {
             request.getSession().removeAttribute("flush");
         }
 
-        //jspに飛ばす
+        //JSPに送る
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/index.jsp");
         rd.forward(request, response);
     }

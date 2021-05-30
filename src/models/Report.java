@@ -18,18 +18,22 @@ import javax.persistence.Table;
 @Table(name = "reports")
 @NamedQueries({
     @NamedQuery(
+        //全ての日報取得
         name = "getAllReports",
         query = "SELECT r FROM Report AS r ORDER BY r.id DESC"
     ),
     @NamedQuery(
+        //日報の全件数を取得
         name = "getReportsCount",
         query = "SELECT COUNT(r) FROM Report AS r"
             ),
     @NamedQuery(
+        //自分の日報を全て取得
         name = "getMyAllReports",
         query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
             ),
     @NamedQuery(
+        //自分の日報件数を取得
         name = "getMyReportsCount",
         query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
             )

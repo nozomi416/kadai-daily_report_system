@@ -78,7 +78,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
                 request.setAttribute("employee", e);
                 request.setAttribute("errors", errors);
 
-                //JSPに飛ばす(edit.jspに戻す)
+                //JSPに送る(edit.jspに戻す)
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/edit.jsp");
                 rd.forward(request, response);
             } else {
