@@ -41,12 +41,35 @@
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
                     <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                 </c:if>
+                <c:if test="${sessionScope.login_employee.id != report.employee.id}">
+                    <p><a href="<c:url value="/comments/new" />">この日報にコメントする</a></p>
+                </c:if>
+
+                <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
+
+                <h3>・コメント</h3>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><c:out value="${comment.employee.name}" /></td>
+                            <td><fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <pre><c:out value="${comment.content}" /></pre>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <c:if test="${sessionScope.login_employee.id == comment.employee.id}">
+                    <p><a href="<c:url value="/comments/edit?id=${comment.id}" />">このコメントを編集する</a></p>
+                </c:if>
             </c:when>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>
+                <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
             </c:otherwise>
         </c:choose>
-
-        <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
     </c:param>
 </c:import>
