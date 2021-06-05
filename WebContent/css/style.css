@@ -164,3 +164,7 @@ pre {
 h3 {
     font-size: larger;
 }
+
+table#comment_list {
+    width: 50%;
+}

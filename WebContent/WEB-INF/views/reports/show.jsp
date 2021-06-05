@@ -48,7 +48,7 @@
                 <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
 
                 <h3>・コメント</h3>
-                <table>
+                <table id="comment_list">
                     <tbody>
                         <c:forEach var="comment" items="${comments}">
                             <tr>
@@ -56,7 +56,7 @@
                                 <td><fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></td>
                             </tr>
                             <tr>
-                                <td>
+                                <td colspan="2">
                                     <pre><c:out value="${comment.content}" /></pre>
                                 </td>
                             </tr>
