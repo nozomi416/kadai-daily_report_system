@@ -47,6 +47,7 @@ public class Report {
     private Integer id;
 
     @ManyToOne
+    //Employeeの主キーと結んでいる
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
