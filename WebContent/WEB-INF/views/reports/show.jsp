@@ -50,15 +50,17 @@
                 <h3>・コメント</h3>
                 <table>
                     <tbody>
-                        <tr>
-                            <td><c:out value="${comment.employee.name}" /></td>
-                            <td><fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <pre><c:out value="${comment.content}" /></pre>
-                            </td>
-                        </tr>
+                        <c:forEach var="comment" items="${comments}">
+                            <tr>
+                                <td><c:out value="${comment.employee.name}" /></td>
+                                <td><fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <pre><c:out value="${comment.content}" /></pre>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
 

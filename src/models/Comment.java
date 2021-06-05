@@ -11,9 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Table(name = "comments")
+@NamedQueries({
+    @NamedQuery(
+            //日報ごとのコメントを取得
+            name = "getReportsComments",
+            query = "SELECT c FROM Comment AS c WHERE c.report = :report ORDER BY c.id DESC"
+            )
+})
 @Entity
 public class Comment {
 
