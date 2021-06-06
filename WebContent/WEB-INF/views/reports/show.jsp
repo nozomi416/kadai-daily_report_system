@@ -48,6 +48,19 @@
                 <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
 
                 <h3>・コメント</h3>
+                <div class="comment_list">
+                    <c:forEach var="comment" items="${comments}">
+                        <p class="comment"><c:out value="${comment.employee.name}" /></p>
+                        <p class="comment" id="comment_date"><fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></p>
+                        <pre id="comment_content"><c:out value="${comment.content}" /></pre>
+                        <c:if test="${sessionScope.login_employee.id == comment.employee.id}">
+                            <p id="comment_edit"><a href="<c:url value="/comments/edit?id=${comment.id}" />">このコメントを編集する</a></p>
+                        </c:if>
+                    </c:forEach>
+                </div>
+
+
+<!--
                 <table id="comment_list">
                     <tbody>
                         <c:forEach var="comment" items="${comments}">
@@ -60,13 +73,16 @@
                                     <pre><c:out value="${comment.content}" /></pre>
                                 </td>
                             </tr>
+                            <tr>
+                                <c:if test="${sessionScope.login_employee.id == comment.employee.id}">
+                                    <td><a href="<c:url value="/comments/edit?id=${comment.id}" />">このコメントを編集する</a></td>
+                                </c:if>
+                            </tr>
                         </c:forEach>
                     </tbody>
                 </table>
+-->
 
-                <c:if test="${sessionScope.login_employee.id == comment.employee.id}">
-                    <p><a href="<c:url value="/comments/edit?id=${comment.id}" />">このコメントを編集する</a></p>
-                </c:if>
             </c:when>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>

@@ -168,3 +168,33 @@ h3 {
 table#comment_list {
     width: 50%;
 }
+
+.comment_list {
+    font-size: 0;
+}
+
+#comment_content {
+    width: 70%;
+    font-size: 16px;
+    border: solid 1px #b0b0b0;
+    padding: 5px 20px;
+}
+
+.comment {
+    display: inline-block;
+    padding: 5px 50px 5px 20px;
+    margin: 0;
+    border: solid 1px #b0b0b0;
+    border-bottom-style: none;
+    font-size: 16px;
+}
+
+#comment_date {
+    border-left-style: none;
+}
+
+#comment_edit {
+    font-size: 14px;
+    margin-top: 5px;
+   padding-left: 700px;
+}
