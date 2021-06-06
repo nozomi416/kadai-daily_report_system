@@ -183,7 +183,7 @@ table#comment_list {
 .comment {
     display: inline-block;
     padding: 5px 50px 5px 20px;
-    margin: 0;
+    margin: 30px 0px 0px 0px;
     border: solid 1px #b0b0b0;
     border-bottom-style: none;
     font-size: 16px;
@@ -195,6 +195,6 @@ table#comment_list {
 
 #comment_edit {
     font-size: 14px;
-    margin-top: 5px;
+    margin: 5px;
    padding-left: 700px;
 }
