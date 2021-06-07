@@ -35,17 +35,22 @@ public class ReportsShowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        //URLのidから該当する日報を抽出してrに代入
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+        //抽出した日報に対するコメントをリストcommentsに代入
         List<Comment> comments = em.createNamedQuery("getReportsComments", Comment.class)
                                     .setParameter("report", r)
                                     .getResultList();
 
         em.close();
 
+        //セッションスコープにset
         request.getSession().setAttribute("report", r);
+        //リクエストスコープにset
         request.setAttribute("comments", comments);
         request.setAttribute("_token", request.getSession().getId());
 
+        //show.jspに送る
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
         rd.forward(request, response);
     }

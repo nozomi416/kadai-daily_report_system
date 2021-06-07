@@ -34,17 +34,21 @@ public class CommentsEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        //URLのidから該当するコメントを抽出してcに代入
         Comment c = em.find(Comment.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();
 
         Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
+        //ログインユーザーとコメント者が同じだったら
         if(c != null && login_employee.getId() == c.getEmployee().getId()) {
             request.setAttribute("comment", c);
             request.setAttribute("_token", request.getSession().getId());
+            //comment_idはセッションスコープ
             request.getSession().setAttribute("comment_id", c.getId());
         }
 
+        //edit.jspに送る
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/comments/edit.jsp");
         rd.forward(request, response);
     }

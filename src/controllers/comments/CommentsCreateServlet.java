@@ -42,12 +42,18 @@ public class CommentsCreateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
+            //Commentのインスタンス化
             Comment c = new Comment();
+            //セッションスコープのreportをgetし代入
             Report report = (Report)request.getSession().getAttribute("report");
 
+            //Employee_idにlogin_employeeのidを設定
             c.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
+            //Report_idを設定
             c.setReport(report);
 
+            //登録日を設定
+            //フォームに入力された日付を上書き
             Date comment_date = new Date(System.currentTimeMillis());
             String cd_str = request.getParameter("comment_date");
             if(cd_str != null && !cd_str.equals("")) {
@@ -55,12 +61,15 @@ public class CommentsCreateServlet extends HttpServlet {
             }
             c.setComment_date(comment_date);
 
+            //内容を設定
             c.setContent(request.getParameter("content"));
 
+            //作成日時と更新日時を設定
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             c.setCreated_at(currentTime);
             c.setUpdated_at(currentTime);
 
+            //エラーチェック
             List<String> errors = CommentValidator.validate(c);
             if(errors.size() > 0) { //エラーがある場合
                 em.close();
@@ -69,6 +78,7 @@ public class CommentsCreateServlet extends HttpServlet {
                 request.setAttribute("comment", c);
                 request.setAttribute("errors", errors);
 
+                //new.jspに戻す
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/comments/new.jsp");
                 rd.forward(request, response);
             } else {
@@ -76,7 +86,7 @@ public class CommentsCreateServlet extends HttpServlet {
                 em.persist(c);
                 em.getTransaction().commit();
                 em.close();
-                //flush追加？
+                //後ほどflush追加
 
                 //詳細ページにリダイレクト
                 response.sendRedirect(request.getContextPath() + "/reports/show?id=" + report.getId());

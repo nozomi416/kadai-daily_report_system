@@ -40,12 +40,17 @@ public class CommentsUpdateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
+            //セッションスコープのcomment_idに該当するコメントを抽出しcに代入
             Comment c = em.find(Comment.class, (Integer)(request.getSession().getAttribute("comment_id")));
 
+            //登録日を設定
             c.setComment_date(Date.valueOf(request.getParameter("comment_date")));
+            //内容を設定
             c.setContent(request.getParameter("content"));
+            //更新日時を設定
             c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
+            //エラーチェック
             List<String> errors = CommentValidator.validate(c);
             if(errors.size() > 0) {  //エラーがある場合
                 em.close();
@@ -54,6 +59,7 @@ public class CommentsUpdateServlet extends HttpServlet {
                 request.setAttribute("comment", c);
                 request.setAttribute("errors", errors);
 
+                //edit.jspに戻す
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/comments/edit.jsp");
                 rd.forward(request, response);
             } else {
@@ -62,8 +68,10 @@ public class CommentsUpdateServlet extends HttpServlet {
                 em.close();
                 //後ほどflush追加
 
+                //リダイレクトで使用するため、セッションスコープのreportをget
                 Report report = (Report)request.getSession().getAttribute("report");
 
+                //詳細ページにリダイレクト
                 response.sendRedirect(request.getContextPath() + "/reports/show?id=" + report.getId());
             }
         }

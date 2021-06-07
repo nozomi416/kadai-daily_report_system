@@ -33,11 +33,15 @@ public class CommentsNewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("_token", request.getSession().getId());
 
+        //Commentのインスタンス化
         Comment c = new Comment();
+        //登録日に本日の日付を設定
         c.setComment_date(new Date(System.currentTimeMillis()));
+        //report_idをセッションスコープのreportからgetし設定
         c.setReport((Report)request.getSession().getAttribute("report"));
         request.setAttribute("comment", c);
 
+        //new.jspに送る
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/comments/new.jsp");
         rd.forward(request, response);
     }
