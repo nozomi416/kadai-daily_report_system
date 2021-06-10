@@ -86,7 +86,7 @@ public class CommentsCreateServlet extends HttpServlet {
                 em.persist(c);
                 em.getTransaction().commit();
                 em.close();
-                //後ほどflush追加
+                request.getSession().setAttribute("flush", "登録が完了しました。");
 
                 //詳細ページにリダイレクト
                 response.sendRedirect(request.getContextPath() + "/reports/show?id=" + report.getId());

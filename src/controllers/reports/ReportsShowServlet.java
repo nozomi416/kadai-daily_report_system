@@ -49,6 +49,12 @@ public class ReportsShowServlet extends HttpServlet {
         //リクエストスコープにset
         request.setAttribute("comments", comments);
         request.setAttribute("_token", request.getSession().getId());
+        //セッションスコープにflushメッセージがあればリクエストスコープに置き換えて、
+        //セッションスコープからは削除
+        if(request.getSession().getAttribute("flush") != null) {
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
+            request.getSession().removeAttribute("flush");
+        }
 
         //show.jspに送る
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");

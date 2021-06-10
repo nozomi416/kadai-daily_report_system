@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
+        <c:if test="${flush != null}">
+            <div id="flush_success">
+                <c:out value="${flush}" />
+            </div>
+        </c:if>
         <c:choose>
             <c:when test="${report != null}">
                 <h2>日報 詳細ページ</h2>

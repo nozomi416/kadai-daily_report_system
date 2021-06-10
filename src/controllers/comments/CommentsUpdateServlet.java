@@ -66,7 +66,9 @@ public class CommentsUpdateServlet extends HttpServlet {
                 em.getTransaction().begin();
                 em.getTransaction().commit();
                 em.close();
-                //後ほどflush追加
+                request.getSession().setAttribute("flush", "更新が完了しました。");
+
+                request.getSession().removeAttribute("comment_id");
 
                 //リダイレクトで使用するため、セッションスコープのreportをget
                 Report report = (Report)request.getSession().getAttribute("report");
