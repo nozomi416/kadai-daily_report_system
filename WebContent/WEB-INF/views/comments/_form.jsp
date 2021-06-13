@@ -21,5 +21,7 @@
 <textarea name="content" rows="10" cols="50">${comment.content}</textarea>
 <br /><br />
 
+<input type="hidden" name="report_id" value="${comment.report.id}" />
+<input type="hidden" name="comment_id" value="${comment.id}" />
 <input type="hidden" name="_token" value="${_token}" />
 <button type="submit">投稿</button>

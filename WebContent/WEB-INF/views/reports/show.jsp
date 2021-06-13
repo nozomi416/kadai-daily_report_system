@@ -43,51 +43,34 @@
                     </tbody>
                 </table>
 
+                <p class="index_a"><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
+
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
                     <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                 </c:if>
                 <c:if test="${sessionScope.login_employee.id != report.employee.id}">
-                    <p><a href="<c:url value="/comments/new" />">この日報にコメントする</a></p>
+                    <p><a href="<c:url value="/comments/new?report_id=${report.id}" />">この日報にコメントする</a></p>
                 </c:if>
 
-                <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
-
-                <h3>・コメント</h3>
-                <div class="comment_list">
+                <h3 id="comment_header">コメント</h3>
+                <hr>
+                <div>
+                    <c:set value="${comments.size() + 1}" var="num" />
                     <c:forEach var="comment" items="${comments}">
-                        <p class="comment"><c:out value="${comment.employee.name}" /></p>
-                        <p class="comment" id="comment_date"><fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></p>
-                        <pre id="comment_content"><c:out value="${comment.content}" /></pre>
+                        <p id="comment_name">${num - 1}.<span class="comment_employee_name"><c:out value="${comment.employee.name}" /></span></p>
+                        <pre class="comment_content"><c:out value="${comment.content}" /></pre>
+                        <p class="comment_date">投稿日：<fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></p>
                         <c:if test="${sessionScope.login_employee.id == comment.employee.id}">
                             <p id="comment_edit"><a href="<c:url value="/comments/edit?id=${comment.id}" />">このコメントを編集する</a></p>
                         </c:if>
+                        <hr id="separationline">
+
+                        <c:set value="${num - 1}" var="num" />
                     </c:forEach>
                 </div>
-
-
-<!--
-                <table id="comment_list">
-                    <tbody>
-                        <c:forEach var="comment" items="${comments}">
-                            <tr>
-                                <td><c:out value="${comment.employee.name}" /></td>
-                                <td><fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <pre><c:out value="${comment.content}" /></pre>
-                                </td>
-                            </tr>
-                            <tr>
-                                <c:if test="${sessionScope.login_employee.id == comment.employee.id}">
-                                    <td><a href="<c:url value="/comments/edit?id=${comment.id}" />">このコメントを編集する</a></td>
-                                </c:if>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
--->
-
+                <c:if test="${comments.size() == 0}">
+                    <p>コメントはありません。</p>
+                </c:if>
             </c:when>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>

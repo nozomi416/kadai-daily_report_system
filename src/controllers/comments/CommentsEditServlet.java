@@ -44,9 +44,6 @@ public class CommentsEditServlet extends HttpServlet {
         if(c != null && login_employee.getId() == c.getEmployee().getId()) {
             request.setAttribute("comment", c);
             request.setAttribute("_token", request.getSession().getId());
-            //comment_idはセッションスコープ
-            //updateで使用する為
-            request.getSession().setAttribute("comment_id", c.getId());
         }
 
         //edit.jspに送る

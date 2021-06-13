@@ -44,9 +44,8 @@ public class ReportsShowServlet extends HttpServlet {
 
         em.close();
 
-        //セッションスコープにset
-        request.getSession().setAttribute("report", r);
         //リクエストスコープにset
+        request.setAttribute("report", r);
         request.setAttribute("comments", comments);
         request.setAttribute("_token", request.getSession().getId());
         //セッションスコープにflushメッセージがあればリクエストスコープに置き換えて、

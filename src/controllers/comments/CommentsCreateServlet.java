@@ -44,13 +44,13 @@ public class CommentsCreateServlet extends HttpServlet {
 
             //Commentのインスタンス化
             Comment c = new Comment();
-            //セッションスコープのreportをgetし代入
-            Report report = (Report)request.getSession().getAttribute("report");
+            //hiddenのreport_idからReportオブジェクトを検索し取得
+            Report r = em.find(Report.class, Integer.parseInt(request.getParameter("report_id")));
 
             //Employee_idにlogin_employeeのidを設定
             c.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
             //Report_idを設定
-            c.setReport(report);
+            c.setReport(r);
 
             //登録日を設定
             //フォームに入力された日付を上書き
@@ -89,7 +89,7 @@ public class CommentsCreateServlet extends HttpServlet {
                 request.getSession().setAttribute("flush", "登録が完了しました。");
 
                 //詳細ページにリダイレクト
-                response.sendRedirect(request.getContextPath() + "/reports/show?id=" + report.getId());
+                response.sendRedirect(request.getContextPath() + "/reports/show?id=" + r.getId());
             }
         }
     }

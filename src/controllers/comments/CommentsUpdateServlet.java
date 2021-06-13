@@ -40,8 +40,8 @@ public class CommentsUpdateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            //セッションスコープのcomment_idに該当するコメントを抽出しcに代入
-            Comment c = em.find(Comment.class, (Integer)(request.getSession().getAttribute("comment_id")));
+            //hiddenで渡されたcomment_idからcommentオブジェクトを取得
+            Comment c = em.find(Comment.class, Integer.parseInt(request.getParameter("comment_id")));
 
             //登録日を設定
             c.setComment_date(Date.valueOf(request.getParameter("comment_date")));
@@ -70,11 +70,11 @@ public class CommentsUpdateServlet extends HttpServlet {
 
                 request.getSession().removeAttribute("comment_id");
 
-                //リダイレクトで使用するため、セッションスコープのreportをget
-                Report report = (Report)request.getSession().getAttribute("report");
+                //commentオブジェクトからreportオブジェクトを取得
+                Report r = c.getReport();
 
                 //詳細ページにリダイレクト
-                response.sendRedirect(request.getContextPath() + "/reports/show?id=" + report.getId());
+                response.sendRedirect(request.getContextPath() + "/reports/show?id=" + r.getId());
             }
         }
     }
