@@ -243,3 +243,50 @@ hr {
     border: none;
     margin-bottom: 30px;
 }
+
+/* 検索フォーム */
+
+.search_field {
+    background-color: #f0f0f0;
+    margin: 5px 0 15px 0;
+}
+
+.search_header {
+    font-size: 25px;
+    padding-top: 5px;
+    padding-left: 10px;
+    margin: 0 0 10px 0;
+}
+
+.search_wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 1%;
+}
+
+.search_column {
+    display: inline-block;
+    width: 33%;
+    margin: 5px 0 15px 0;
+}
+
+.search_box {
+    width: 95%;
+    margin: 5px;
+}
+
+.button_wrapper {
+    text-align: center;
+}
+
+.search_submit_button {
+    margin-bottom: 15px;
+    padding: 10px 8%;
+    background-color: #333;
+    color: #ccc;
+    font-size: 16px;
+}
+
+.search_submit_button:hover {
+    background-color: #595959;
+}

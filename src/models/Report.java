@@ -36,6 +36,11 @@ import javax.persistence.Table;
         //自分の日報件数を取得
         name = "getMyReportsCount",
         query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
+            ),
+    @NamedQuery(
+        //検索条件に合致する日報を取得
+        name = "getSearchReports",
+        query = "SELECT r FROM Report AS r WHERE r.employee.name like :name AND r.title like :title AND r.report_date = :report_date"
             )
 })
 @Entity

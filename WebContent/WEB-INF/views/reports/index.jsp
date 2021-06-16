@@ -9,6 +9,28 @@
             </div>
         </c:if>
         <h2>日報 一覧</h2>
+
+        <div class="search_field">
+            <h3 class="search_header">検索</h3>
+            <div class="search_wrapper">
+                <div class="search_column">
+                    <label>氏名 ※部分一致可</label><br />
+                    <input type="text" name="name" class="search_box" placeholder="氏名を入力してください" />
+                </div>
+                <div class="search_column">
+                    <label>日付</label><br />
+                    <input type="date" name="date" class="search_box" />
+                </div>
+                <div class="search_column">
+                    <label>タイトル ※部分一致可</label><br />
+                    <input type="text" name="title" class="search_box" placeholder="タイトルを入力してください" />
+                </div>
+            </div>
+            <div class="button_wrapper">
+                <button type="submit" class="search_submit_button">検　索</button>
+            </div>
+        </div>
+
         <table id="report_list">
             <tbody>
                 <tr>

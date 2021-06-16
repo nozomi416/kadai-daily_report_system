@@ -51,16 +51,8 @@ public class CommentsCreateServlet extends HttpServlet {
             c.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
             //Report_idを設定
             c.setReport(r);
-
             //登録日を設定
-            //フォームに入力された日付を上書き
-            Date comment_date = new Date(System.currentTimeMillis());
-            String cd_str = request.getParameter("comment_date");
-            if(cd_str != null && !cd_str.equals("")) {
-                comment_date = Date.valueOf(request.getParameter("comment_date"));
-            }
-            c.setComment_date(comment_date);
-
+            c.setComment_date(Date.valueOf(request.getParameter("comment_date")));
             //内容を設定
             c.setContent(request.getParameter("content"));
 

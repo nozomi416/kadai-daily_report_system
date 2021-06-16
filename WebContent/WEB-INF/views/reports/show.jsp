@@ -55,9 +55,8 @@
                 <h3 id="comment_header">コメント</h3>
                 <hr>
                 <div>
-                    <c:set value="${comments.size() + 1}" var="num" />
-                    <c:forEach var="comment" items="${comments}">
-                        <p id="comment_name">${num - 1}.<span class="comment_employee_name"><c:out value="${comment.employee.name}" /></span></p>
+                    <c:forEach var="comment" items="${comments}" varStatus="status">
+                        <p id="comment_name">${comments.size() - status.index}.<span class="comment_employee_name"><c:out value="${comment.employee.name}" /></span></p>
                         <pre class="comment_content"><c:out value="${comment.content}" /></pre>
                         <p class="comment_date">投稿日：<fmt:formatDate value="${comment.comment_date}" pattern="yyyy-MM-dd" /></p>
                         <c:if test="${sessionScope.login_employee.id == comment.employee.id}">
