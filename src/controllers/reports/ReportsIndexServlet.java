@@ -1,6 +1,7 @@
 package controllers.reports;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -34,19 +35,72 @@ public class ReportsIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        //変数宣言
+        List<Report> reports;
+        long reports_count;
+
+        //パラメーターを取得
+        String name = request.getParameter("name");
+        String rd_str = request.getParameter("date");
+        String title = request.getParameter("title");
+
+        //ページを取得、初期値は1
         int page;
         try {
             page = Integer.parseInt(request.getParameter("page"));
         } catch(Exception e) {
             page = 1;
         }
-        List<Report> reports = em.createNamedQuery("getAllReports", Report.class)
+
+        /*
+         * 検索処理
+         */
+
+
+        if(rd_str != null && !rd_str.equals("")) {
+            //キーワードに日付が入っている場合
+
+            //日付を文字列からDate型に変換
+            Date report_date = Date.valueOf(rd_str);
+
+            reports = em.createNamedQuery("getSearchReports", Report.class)
+                                    .setParameter("name", "%" + name + "%")
+                                    .setParameter("report_date", report_date)
+                                    .setParameter("title", "%" + title + "%")
+                                    .setFirstResult(15 * (page -1))
+                                    .setMaxResults(15)
+                                    .getResultList();
+
+            reports_count = (long)em.createNamedQuery("getSearchReportsCount", Long.class)
+                                    .setParameter("name", "%" + name + "%")
+                                    .setParameter("report_date", report_date)
+                                    .setParameter("title", "%" + title + "%")
+                                    .getSingleResult();
+
+        } else if(name != null && !name.equals("") || title!= null && !title.equals("")) {
+            //キーワードに日付が入っていない場合
+            reports = em.createNamedQuery("getSearchReportsNodate", Report.class)
+                                    .setParameter("name", "%" + name + "%")
+                                    .setParameter("title", "%" + title + "%")
+                                    .setFirstResult(15 * (page -1))
+                                    .setMaxResults(15)
+                                    .getResultList();
+
+            reports_count = (long)em.createNamedQuery("getSearchReportsNodateCount", Long.class)
+                                    .setParameter("name", "%" + name + "%")
+                                    .setParameter("title", "%" + title + "%")
+                                    .getSingleResult();
+
+        } else {
+            //キーワードがnullの時は日報全件を表示
+            reports = em.createNamedQuery("getAllReports", Report.class)
                                     .setFirstResult(15 * (page - 1))
                                     .setMaxResults(15)
                                     .getResultList();
 
-        long reports_count  = (long)em.createNamedQuery("getReportsCount", Long.class)
+            reports_count  = (long)em.createNamedQuery("getReportsCount", Long.class)
                                     .getSingleResult();
+        }
 
         em.close();
 

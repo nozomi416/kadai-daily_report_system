@@ -38,10 +38,25 @@ import javax.persistence.Table;
         query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
             ),
     @NamedQuery(
-        //検索条件に合致する日報を取得
+        //検索条件に合致する日報を取得 ※report_dateにキーワードが入っている場合
         name = "getSearchReports",
-        query = "SELECT r FROM Report AS r WHERE r.employee.name like :name AND r.title like :title AND r.report_date = :report_date"
-            )
+        query = "SELECT r FROM Report AS r WHERE r.employee.name LIKE :name AND r.title LIKE :title AND r.report_date = :report_date"
+            ),
+    @NamedQuery(
+        //検索条件に合致する日報件数を取得 ※report_dateにキーワードが入っている場合
+        name = "getSearchReportsCount",
+        query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee.name LIKE :name AND r.title LIKE :title AND r.report_date = :report_date"
+        ),
+    @NamedQuery(
+        //検索条件に合致する日報を取得 ※report_dateにキーワードが入っていない場合
+        name = "getSearchReportsNodate",
+        query = "SELECT r FROM Report AS r WHERE r.employee.name LIKE :name AND r.title LIKE :title"
+        ),
+    @NamedQuery(
+        //検索条件に合致する日報件数を取得 ※report_dateにキーワードが入っていない場合
+        name = "getSearchReportsNodateCount",
+        query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee.name LIKE :name AND r.title LIKE :title"
+        )
 })
 @Entity
 public class Report {
