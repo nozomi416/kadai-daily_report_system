@@ -55,8 +55,6 @@ public class ReportsIndexServlet extends HttpServlet {
         /*
          * 検索処理
          */
-
-
         if(rd_str != null && !rd_str.equals("")) {
             //キーワードに日付が入っている場合
 
@@ -77,6 +75,10 @@ public class ReportsIndexServlet extends HttpServlet {
                                     .setParameter("title", "%" + title + "%")
                                     .getSingleResult();
 
+            request.setAttribute("name", name);
+            request.setAttribute("date", rd_str);
+            request.setAttribute("title", title);
+
         } else if(name != null && !name.equals("") || title!= null && !title.equals("")) {
             //キーワードに日付が入っていない場合
             reports = em.createNamedQuery("getSearchReportsNodate", Report.class)
@@ -90,6 +92,9 @@ public class ReportsIndexServlet extends HttpServlet {
                                     .setParameter("name", "%" + name + "%")
                                     .setParameter("title", "%" + title + "%")
                                     .getSingleResult();
+
+            request.setAttribute("name", name);
+            request.setAttribute("title", title);
 
         } else {
             //キーワードがnullの時は日報全件を表示

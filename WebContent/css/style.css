@@ -279,12 +279,27 @@ hr {
     text-align: center;
 }
 
+.search_reset_button {
+    margin-bottom: 15px;
+    margin-right: 10px;
+    padding: 10px 5%;
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    border: 1px solid;
+}
+
+.search_reset_button:hover {
+    background-color: #ededed;
+}
+
 .search_submit_button {
     margin-bottom: 15px;
     padding: 10px 8%;
     background-color: #333;
     color: #ccc;
     font-size: 16px;
+    border: 1px solid;
 }
 
 .search_submit_button:hover {

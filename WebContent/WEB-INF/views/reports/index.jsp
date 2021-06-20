@@ -16,19 +16,31 @@
                 <div class="search_wrapper">
                     <div class="search_column">
                         <label>氏名 ※部分一致可</label><br />
-                        <input type="text" name="name" class="search_box" placeholder="氏名を入力してください" />
+                        <input type="text" name="name" id="search_name" class="search_box" value="${name}" placeholder="氏名を入力してください" />
                     </div>
                     <div class="search_column">
                         <label>日付</label><br />
-                        <input type="date" name="date" class="search_box" />
+                        <input type="date" name="date" id="search_date" class="search_box" value="${date}" />
                     </div>
                     <div class="search_column">
                         <label>タイトル ※部分一致可</label><br />
-                        <input type="text" name="title" class="search_box" placeholder="タイトルを入力してください" />
+                        <input type="text" name="title" id="search_title" class="search_box" value="${title}" placeholder="タイトルを入力してください" />
                     </div>
                 </div>
                 <div class="button_wrapper">
+                    <button type="button" class="search_reset_button" onclick="clearText();">条件をクリア</button>
                     <button type="submit" class="search_submit_button">検　索</button>
+
+                    <script>
+                    function clearText() {
+                        var search_name = document.getElementById('search_name');
+                        search_name.value = '';
+                        var search_date = document.getElementById('search_date');
+                        search_date.value = '';
+                        var search_title = document.getElementById('search_title');
+                        search_title.value = '';
+                    }
+                    </script>
                 </div>
             </div>
         </form>
