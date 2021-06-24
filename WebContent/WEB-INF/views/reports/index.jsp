@@ -10,6 +10,7 @@
         </c:if>
         <h2>日報 一覧</h2>
 
+        <!-- 検索フォーム -->
         <form method="GET" action ="<c:url value='/reports/index' />">
             <div class="search_field">
                 <h3 class="search_header">検索</h3>
@@ -31,6 +32,7 @@
                     <button type="button" class="search_reset_button" onclick="clearText();">条件をクリア</button>
                     <button type="submit" class="search_submit_button">検　索</button>
 
+                    <!-- 検索条件クリアの機能 -->
                     <script>
                     function clearText() {
                         var search_name = document.getElementById('search_name');
@@ -45,6 +47,7 @@
             </div>
         </form>
 
+        <!-- 日報表示 -->
         <table id="report_list">
             <tbody>
                 <tr>
@@ -64,6 +67,7 @@
             </tbody>
         </table>
 
+        <!-- ページネーション -->
         <div id="pagination">
             (全 ${reports_count} 件)<br />
             <c:forEach var="i" begin="1" end="${((reports_count - 1) / 15) + 1}" step="1">
