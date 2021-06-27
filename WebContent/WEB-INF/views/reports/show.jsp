@@ -29,6 +29,10 @@
                             </td>
                         </tr>
                         <tr>
+                            <th>添付ファイル</th>
+                            <td><a href="<c:url value="" />">*ここにファイルが表示される*</a></td>
+                        </tr>
+                        <tr>
                             <th>登録日時</th>
                             <td>
                                 <fmt:formatDate value="${report.created_at}" pattern="yyyy-MM-dd HH:mm:ss" />

@@ -44,7 +44,7 @@ public class ReportsIndexServlet extends HttpServlet {
         String rd_str = request.getParameter("date");
         String title = request.getParameter("title");
 
-        //ページを取得、初期値は1
+        //ページを取得、取得できない場合は1に初期化
         int page;
         try {
             page = Integer.parseInt(request.getParameter("page"));
