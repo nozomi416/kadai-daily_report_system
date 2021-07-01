@@ -5,7 +5,7 @@
         <c:choose>
             <c:when test="${report != null}">
                 <h2>日報 編集ページ</h2>
-                <form method="POST" action="<c:url value='/reports/update' />">
+                <form method="POST" action="<c:url value='/reports/update' />" enctype="multipart/form-data">
                     <c:import url="_form.jsp" />
                 </form>
             </c:when>

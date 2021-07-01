@@ -41,24 +41,6 @@ public class ReportsCreateServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //ファイルの処理
-        Collection<Part> parts = request.getParts();
-        for(Part part: parts) {
-            if(part.getName().equals("upfile")) {
-            //ファイル名を調整するためファイルの名前と拡張子を分ける
-            int i = part.getSubmittedFileName().indexOf(".");
-            String file_name = part.getSubmittedFileName().substring(0, i);
-            String ext = part.getSubmittedFileName().substring(i + 1);
-
-            //ファイル名に時刻を追記
-            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-            String currentTimestampToString = new SimpleDateFormat("yyyyMMddHHmmss").format(currentTimestamp);
-
-            //下記ファイル名でアップロード
-            part.write("/Users/uploads/" + file_name + "_" + currentTimestampToString + "." + ext);
-            }
-        }
-
         String _token = request.getParameter("_token");
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
@@ -82,6 +64,25 @@ public class ReportsCreateServlet extends HttpServlet {
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);
 
+            //ファイルの処理
+            Collection<Part> parts = request.getParts();
+            for(Part part: parts) {
+                if(part.getName().equals("upfile")) {
+                    //ファイル名を調整するためファイルの名前と拡張子を分ける
+                    int i = part.getSubmittedFileName().indexOf(".");
+                    String file_name = part.getSubmittedFileName().substring(0, i);
+                    String ext = part.getSubmittedFileName().substring(i);
+
+                    //ファイル名に時刻を追記
+                    Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+                    String currentTimestampToString = new SimpleDateFormat("yyyyMMddHHmmss").format(currentTimestamp);
+
+                    //下記ファイル名でアップロード
+                    part.write("/Users/uploads/" + file_name + "_" + currentTimestampToString + ext);
+                }
+            }
+
+            //エラー確認
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) { //エラーがあったら
                 em.close();
