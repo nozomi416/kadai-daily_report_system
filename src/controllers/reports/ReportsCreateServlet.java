@@ -3,6 +3,7 @@ package controllers.reports;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
 
@@ -43,7 +44,19 @@ public class ReportsCreateServlet extends HttpServlet {
         //ファイルの処理
         Collection<Part> parts = request.getParts();
         for(Part part: parts) {
-            part.write("/Users/uploads/" + part.getSubmittedFileName());
+            if(part.getName().equals("upfile")) {
+            //ファイル名を調整するためファイルの名前と拡張子を分ける
+            int i = part.getSubmittedFileName().indexOf(".");
+            String file_name = part.getSubmittedFileName().substring(0, i);
+            String ext = part.getSubmittedFileName().substring(i + 1);
+
+            //ファイル名に時刻を追記
+            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+            String currentTimestampToString = new SimpleDateFormat("yyyyMMddHHmmss").format(currentTimestamp);
+
+            //下記ファイル名でアップロード
+            part.write("/Users/uploads/" + file_name + "_" + currentTimestampToString + "." + ext);
+            }
         }
 
         String _token = request.getParameter("_token");
