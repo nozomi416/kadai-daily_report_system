@@ -102,8 +102,9 @@ public class ReportsCreateServlet extends HttpServlet {
                         //ファイル情報を格納
                         f = new File();
 
-                        f.setReport_id(r);
-                        f.setName(file_name + "_" + currentTimestampToString + ext);
+                        f.setReport(r);
+                        f.setFileName(file_name + "_" + currentTimestampToString + ext);
+                        f.setFileOriginalName(part.getSubmittedFileName());
                         f.setCreated_at(currentTime);
 
                         em.getTransaction().begin();

@@ -18,7 +18,7 @@ import javax.persistence.Table;
     @NamedQuery(
             //日報ごとのファイルを取得
             name = "getReportsFiles",
-            query = "SELECT f FROM File AS f WHERE f.report_id = :report_id ORDER BY f.id ASC"
+            query = "SELECT f FROM File AS f WHERE f.report = :report ORDER BY f.id ASC"
             )
 })
 @Entity
@@ -31,10 +31,13 @@ public class File {
 
     @ManyToOne
     @JoinColumn(name = "report_id", nullable = false)
-    private Report report_id;
+    private Report report;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "fileName", nullable = false)
+    private String fileName;
+
+    @Column(name = "fileOriginalName", nullable = false)
+    private String fileOriginalName;
 
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
@@ -49,20 +52,28 @@ public class File {
         this.id = id;
     }
 
-    public Report getReport_id() {
-        return report_id;
+    public Report getReport() {
+        return report;
     }
 
-    public void setReport_id(Report report_id) {
-        this.report_id = report_id;
+    public void setReport(Report report) {
+        this.report = report;
     }
 
-    public String getName() {
-        return name;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileOriginalName() {
+        return fileOriginalName;
+    }
+
+    public void setFileOriginalName(String fileOriginalName) {
+        this.fileOriginalName = fileOriginalName;
     }
 
     public Timestamp getCreated_at() {
