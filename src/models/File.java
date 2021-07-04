@@ -27,9 +27,6 @@ public class File {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "path", nullable = false)
-    private String path;
-
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
 
@@ -57,14 +54,6 @@ public class File {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public Timestamp getCreated_at() {

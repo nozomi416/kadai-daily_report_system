@@ -51,10 +51,10 @@ public class ReportsUpdateServlet extends HttpServlet {
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
-            //ファイルの処理
+            //ファイルがある場合のみファイルの処理を行う
             Collection<Part> parts = request.getParts();
             for(Part part: parts) {
-                if(part.getName().equals("upfile")) {
+                if(part.getName().equals("upfile") && part.getSize() > 0) {
                     //ファイル名を調整するためファイルの名前と拡張子を分ける
                     int i = part.getSubmittedFileName().indexOf(".");
                     String file_name = part.getSubmittedFileName().substring(0, i);
@@ -65,7 +65,8 @@ public class ReportsUpdateServlet extends HttpServlet {
                     String currentTimestampToString = new SimpleDateFormat("yyyyMMddHHmmss").format(currentTimestamp);
 
                     //下記ファイル名でアップロード
-                    part.write("/Users/uploads/" + file_name + "_" + currentTimestampToString + ext);
+                    part.write("/Applications/Eclipse_4.6.3.app/Contents/workspace/daily_report_system/WebContent/images"
+                                + file_name + "_" + currentTimestampToString + ext);
                 }
             }
 

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import models.Employee;
+import models.File;
 import models.Report;
 import models.validators.ReportValidator;
 import utils.DBUtil;
@@ -45,7 +46,7 @@ public class ReportsCreateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            //Reportのインスタンス化
+            //Reportの情報を格納
             Report r = new Report();
 
             r.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
@@ -64,24 +65,6 @@ public class ReportsCreateServlet extends HttpServlet {
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);
 
-            //ファイルの処理
-            Collection<Part> parts = request.getParts();
-            for(Part part: parts) {
-                if(part.getName().equals("upfile")) {
-                    //ファイル名を調整するためファイルの名前と拡張子を分ける
-                    int i = part.getSubmittedFileName().indexOf(".");
-                    String file_name = part.getSubmittedFileName().substring(0, i);
-                    String ext = part.getSubmittedFileName().substring(i);
-
-                    //ファイル名に時刻を追記
-                    Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-                    String currentTimestampToString = new SimpleDateFormat("yyyyMMddHHmmss").format(currentTimestamp);
-
-                    //下記ファイル名でアップロード
-                    part.write("/Users/uploads/" + file_name + "_" + currentTimestampToString + ext);
-                }
-            }
-
             //エラー確認
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) { //エラーがあったら
@@ -98,6 +81,37 @@ public class ReportsCreateServlet extends HttpServlet {
                 em.getTransaction().begin();
                 em.persist(r);
                 em.getTransaction().commit();
+
+                //ファイルがある場合のみファイルの格納処理を行う
+                File f;
+                Collection<Part> parts = request.getParts();
+                for(Part part: parts) {
+                    if(part.getName().equals("upfile") && part.getSize() > 0) {
+                        //ファイル名を調整するためファイルの名前と拡張子を分ける
+                        int i = part.getSubmittedFileName().indexOf(".");
+                        String file_name = part.getSubmittedFileName().substring(0, i);
+                        String ext = part.getSubmittedFileName().substring(i);
+
+                        //ファイル名に現在時刻を追記
+                        String currentTimestampToString = new SimpleDateFormat("yyyyMMddHHmmss").format(currentTime);
+
+                        //下記ファイル名でアップロード
+                        part.write("/Applications/Eclipse_4.6.3.app/Contents/workspace/daily_report_system/WebContent/images/"
+                                    + file_name + "_" + currentTimestampToString + ext);
+
+                        //ファイル情報を格納
+                        f = new File();
+
+                        f.setReport_id(r);
+                        f.setName(file_name + "_" + currentTimestampToString + ext);
+                        f.setCreated_at(currentTime);
+
+                        em.getTransaction().begin();
+                        em.persist(f);
+                        em.getTransaction().commit();
+                    }
+                }
+
                 em.close();
                 request.getSession().setAttribute("flush", "登録が完了しました。");
 
@@ -106,5 +120,4 @@ public class ReportsCreateServlet extends HttpServlet {
             }
         }
     }
-
 }
