@@ -9,9 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Table(name = "files")
+@NamedQueries({
+    @NamedQuery(
+            //日報ごとのファイルを取得
+            name = "getReportsFiles",
+            query = "SELECT f FROM File AS f WHERE f.report_id = :report_id ORDER BY f.id ASC"
+            )
+})
 @Entity
 public class File {
 

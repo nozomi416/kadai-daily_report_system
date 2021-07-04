@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Comment;
+import models.File;
 import models.Report;
 import utils.DBUtil;
 
@@ -37,9 +38,15 @@ public class ReportsShowServlet extends HttpServlet {
 
         //URLのidから該当する日報を抽出してrに代入
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+
         //抽出した日報に対するコメントをリストcommentsに代入
         List<Comment> comments = em.createNamedQuery("getReportsComments", Comment.class)
                                     .setParameter("report", r)
+                                    .getResultList();
+
+        //抽出した日報に対するファイルをリストfilesに代入
+        List<File> files = em.createNamedQuery("getReportsFiles", File.class)
+                                    .setParameter("report_id", r)
                                     .getResultList();
 
         em.close();
@@ -47,6 +54,7 @@ public class ReportsShowServlet extends HttpServlet {
         //リクエストスコープにset
         request.setAttribute("report", r);
         request.setAttribute("comments", comments);
+        request.setAttribute("files", files);
         request.setAttribute("_token", request.getSession().getId());
         //セッションスコープにflushメッセージがあればリクエストスコープに置き換えて、
         //セッションスコープからは削除

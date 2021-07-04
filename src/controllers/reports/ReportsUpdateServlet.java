@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import models.File;
 import models.Report;
 import models.validators.ReportValidator;
 import utils.DBUtil;
@@ -51,25 +52,6 @@ public class ReportsUpdateServlet extends HttpServlet {
             r.setContent(request.getParameter("content"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
-            //ファイルがある場合のみファイルの処理を行う
-            Collection<Part> parts = request.getParts();
-            for(Part part: parts) {
-                if(part.getName().equals("upfile") && part.getSize() > 0) {
-                    //ファイル名を調整するためファイルの名前と拡張子を分ける
-                    int i = part.getSubmittedFileName().indexOf(".");
-                    String file_name = part.getSubmittedFileName().substring(0, i);
-                    String ext = part.getSubmittedFileName().substring(i);
-
-                    //ファイル名に時刻を追記
-                    Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-                    String currentTimestampToString = new SimpleDateFormat("yyyyMMddHHmmss").format(currentTimestamp);
-
-                    //下記ファイル名でアップロード
-                    part.write("/Applications/Eclipse_4.6.3.app/Contents/workspace/daily_report_system/WebContent/images"
-                                + file_name + "_" + currentTimestampToString + ext);
-                }
-            }
-
             //エラー確認
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) { //エラーがあったら
@@ -85,6 +67,38 @@ public class ReportsUpdateServlet extends HttpServlet {
             } else { //正常な場合
                 em.getTransaction().begin();
                 em.getTransaction().commit();
+
+                //ファイルがある場合のみファイルの処理を行う
+                File f;
+                Collection<Part> parts = request.getParts();
+                for(Part part: parts) {
+                    if(part.getName().equals("upfile") && part.getSize() > 0) {
+                        //ファイル名を調整するためファイルの名前と拡張子を分ける
+                        int i = part.getSubmittedFileName().indexOf(".");
+                        String file_name = part.getSubmittedFileName().substring(0, i);
+                        String ext = part.getSubmittedFileName().substring(i);
+
+                        //ファイル名に時刻を追記
+                        Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+                        String currentTimestampToString = new SimpleDateFormat("yyyyMMddHHmmss").format(currentTimestamp);
+
+                        //下記ファイル名でアップロード
+                        part.write("/Applications/Eclipse_4.6.3.app/Contents/workspace/daily_report_system/WebContent/images/"
+                                    + file_name + "_" + currentTimestampToString + ext);
+
+                        //ファイル情報を格納
+                        f = new File();
+
+                        f.setReport_id(r);
+                        f.setName(file_name + "_" + currentTimestampToString + ext);
+                        f.setCreated_at(currentTimestamp);
+
+                        em.getTransaction().begin();
+                        em.persist(f);
+                        em.getTransaction().commit();
+                    }
+                }
+
                 em.close();
                 request.getSession().setAttribute("flush", "更新が完了しました。");
 
