@@ -32,9 +32,17 @@
                             <th>添付ファイル</th>
                             <td>
                                 <c:forEach var="file" items="${files}" varStatus="status">
-                                    <a href="/Applications/Eclipse_4.6.3.app/Contents/workspace/daily_report_system/WebContent/images/<c:out value="${file.fileName}" />">
-                                        <img src="${pageContext.request.contextPath}/icons/jpg.png" alt="icon" width="50" height="50"><br />
-                                        <c:out value="${file.fileOriginalName}" /><br /></a>
+                                    <div class="files">
+                                        <img class="icons" src="${pageContext.request.contextPath}/icons/jpg.png" onclick="imgwin('<c:out value="${file.fileName}" />')" alt="icon"><br />
+                                        <c:out value="${file.fileOriginalName}" /><br />
+
+                                        <%-- 画像表示スクリプト --%>
+                                        <script type="text/javascript">
+                                        function imgwin(img) {
+                                            window.open("${pageContext.request.contextPath}/images/"+img, "imgwindow", "width=866, height=580");
+                                        }
+                                        </script>
+                                    </div>
                                 </c:forEach>
                             </td>
                         </tr>
