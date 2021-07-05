@@ -46,7 +46,7 @@ public class ReportsShowServlet extends HttpServlet {
 
         //抽出した日報に対するファイルをリストfilesに代入
         List<File> files = em.createNamedQuery("getReportsFiles", File.class)
-                                    .setParameter("report_id", r)
+                                    .setParameter("report", r)
                                     .getResultList();
 
         em.close();

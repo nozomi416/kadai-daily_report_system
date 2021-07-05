@@ -30,7 +30,13 @@
                         </tr>
                         <tr>
                             <th>添付ファイル</th>
-                            <td><a href="<c:url value="" />">*ここにファイルが表示される*</a></td>
+                            <td>
+                                <c:forEach var="file" items="${files}" varStatus="status">
+                                    <a href="/Applications/Eclipse_4.6.3.app/Contents/workspace/daily_report_system/WebContent/images/<c:out value="${file.fileName}" />">
+                                        <img src="${pageContext.request.contextPath}/icons/jpg.png" alt="icon" width="50" height="50"><br />
+                                        <c:out value="${file.fileOriginalName}" /><br /></a>
+                                </c:forEach>
+                            </td>
                         </tr>
                         <tr>
                             <th>登録日時</th>
