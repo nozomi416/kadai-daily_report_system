@@ -25,7 +25,24 @@
 <textarea name="content" rows="10" cols="50">${report.content}</textarea>
 <br /><br />
 
-<input type="file" name="upfile" multiple />
+<label for="file">添付ファイル ※削除する場合はチェックを入れて更新して下さい。</label><br />
+<c:forEach var="file" items="${files}" varStatus="status">
+    <div class="files">
+        <input type="checkbox" name="deleteFile_id" value="${file.id}"><br />
+        <img class="icons" src="${pageContext.request.contextPath}/icons/jpg.png" onclick="imgwin('<c:out value="${file.fileName}" />')" alt="icon"><br />
+        <c:out value="${file.fileOriginalName}" /><br />
+
+        <%-- 画像表示スクリプト --%>
+        <script type="text/javascript">
+        function imgwin(img) {
+            window.open("${pageContext.request.contextPath}/images/"+img, "imgwindow", "width=866, height=580");
+        }
+        </script>
+    </div>
+</c:forEach>
+<br />
+
+<input type="file" name="upfile" accept=".jpg, .jpeg, .png, .pdf" multiple />
 
 <input type="hidden" name="_token" value="${_token}" />
-<button type="submit">投稿</button>
+<button type="submit">更新</button>

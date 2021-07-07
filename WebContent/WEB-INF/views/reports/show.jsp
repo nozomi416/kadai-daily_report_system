@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
         <c:if test="${flush != null}">
@@ -33,8 +34,20 @@
                             <td>
                                 <c:forEach var="file" items="${files}" varStatus="status">
                                     <div class="files">
-                                        <img class="icons" src="${pageContext.request.contextPath}/icons/jpg.png" onclick="imgwin('<c:out value="${file.fileName}" />')" alt="icon"><br />
-                                        <c:out value="${file.fileOriginalName}" /><br />
+                                        <c:choose>
+                                            <c:when test="${fn:substringAfter(file.fileName,'.') == 'jpeg' || fn:substringAfter(file.fileName,'.') == 'jpg'}">
+                                                <img class="icons" src="${pageContext.request.contextPath}/icons/jpg.png" onclick="imgwin('<c:out value="${file.fileName}" />')" alt="icon"><br />
+                                                <c:out value="${file.fileOriginalName}" /><br />
+                                            </c:when>
+                                            <c:when test="${fn:substringAfter(file.fileName,'.') == 'png'}">
+                                                <img class="icons" src="${pageContext.request.contextPath}/icons/png.png" onclick="imgwin('<c:out value="${file.fileName}" />')" alt="icon"><br />
+                                                <c:out value="${file.fileOriginalName}" /><br />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img class="icons" src="${pageContext.request.contextPath}/icons/pdf.png" onclick="imgwin('<c:out value="${file.fileName}" />')" alt="icon"><br />
+                                                <c:out value="${file.fileOriginalName}" /><br />
+                                            </c:otherwise>
+                                        </c:choose>
 
                                         <%-- 画像表示スクリプト --%>
                                         <script type="text/javascript">
@@ -64,6 +77,7 @@
                 <p class="index_a"><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
 
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
+                    <input type="hidden" name="files" value="${files}" />
                     <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                 </c:if>
                 <c:if test="${sessionScope.login_employee.id != report.employee.id}">

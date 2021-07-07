@@ -19,6 +19,10 @@ import javax.persistence.Table;
             //日報ごとのファイルを取得
             name = "getReportsFiles",
             query = "SELECT f FROM File AS f WHERE f.report = :report ORDER BY f.id ASC"
+            ),
+    @NamedQuery(
+            name = "deleteFile",
+            query = "DELETE FROM File AS f WHERE f.id = :id"
             )
 })
 @Entity
