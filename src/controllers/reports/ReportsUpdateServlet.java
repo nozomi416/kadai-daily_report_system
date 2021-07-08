@@ -46,6 +46,7 @@ public class ReportsUpdateServlet extends HttpServlet {
             EntityManager em = DBUtil.createEntityManager();
 
             //ファイル削除の処理
+            em.getTransaction().begin();
             if(request.getParameterValues("deleteFile_id") != null) {
                 String[] deleteFiles = request.getParameterValues("deleteFile_id");
                 for(String deleteFile_id: deleteFiles) {
@@ -54,6 +55,7 @@ public class ReportsUpdateServlet extends HttpServlet {
                         .executeUpdate();
                 }
             }
+            em.getTransaction().commit();
 
             Report r = em.find(Report.class, (Integer)(request.getSession().getAttribute("report_id")));
 
