@@ -43,7 +43,7 @@ a {
 }
 
 table, tr, th, td {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
 }
 
 table {
@@ -166,6 +166,87 @@ h3 {
     font-size: larger;
 }
 
+
+/* 日報 _form */
+
+.report_form label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+#file_text {
+    font-weight: normal;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.form_box {
+    background-color: #f0f0f0;
+    border: 1px solid #f0f0f0;
+    padding: 5px;
+    width: 40%;
+}
+
+.form_box:focus {
+    border: 1px solid #333;
+    z-index: 10;
+    outline: 0;
+}
+
+.form_button {
+    padding: 10px 5px;
+    margin: 40px 0 10px 0;
+    background-color: #333;
+    color: #eee;
+    width: 41%;
+    font-size: 16px;
+    border: none;
+}
+
+#delete_checkbox {
+    margin-left: 20px;
+}
+
+/* 日報 新規投稿・編集ページ */
+
+.files {
+    display: inline-block;
+    margin: 5px;
+    width: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-bottom: 15px;
+}
+
+/* 日報新規投稿・編集ページ */
+
+.report h2 {
+    font-size: 30px;
+    margin: 25px 0 30px 0;
+}
+
+
+/* 日報詳細ページ 新規投稿・編集ページ
+   添付ファイル欄 */
+
+.icons {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.files_show {
+    display: inline-block;
+    margin: 5px;
+    width: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
 /* 日報詳細ページ */
 
 .index_a {
@@ -245,22 +326,23 @@ hr {
     margin-bottom: 30px;
 }
 
-/* 日報詳細ページ 添付ファイル欄 */
 
-.icons {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-}
+/* コメント _form */
 
-.files {
+.comment_form label {
     display: inline-block;
-    margin: 5px;
-    width: 90px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    font-weight: bold;
+    margin-bottom: 3px;
 }
+
+
+/* コメント新規投稿・編集ページ */
+
+.comment h2 {
+    font-size: 30px;
+    margin: 25px 0 30px 0;
+}
+
 
 /* 検索フォーム */
 

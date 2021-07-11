@@ -33,7 +33,7 @@
                             <th>添付ファイル</th>
                             <td>
                                 <c:forEach var="file" items="${files}" varStatus="status">
-                                    <div class="files">
+                                    <div class="files_show">
                                         <c:choose>
                                             <c:when test="${fn:substringAfter(file.fileName,'.') == 'jpeg' || fn:substringAfter(file.fileName,'.') == 'jpg'}">
                                                 <img class="icons" src="${pageContext.request.contextPath}/icons/jpg.png" onclick="imgwin('<c:out value="${file.fileName}" />')" alt="icon"><br />

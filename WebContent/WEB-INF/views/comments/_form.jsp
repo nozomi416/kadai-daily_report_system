@@ -9,19 +9,31 @@
         </c:forEach>
     </div>
 </c:if>
-<label for="comment_date">日付</label><br />
-<input type="date" name="comment_date" value="<fmt:formatDate value='${comment.comment_date}' pattern='yyyy-MM-dd' />" />
-<br /><br />
+<div class="comment_form">
+    <label for="name">氏名</label><br />
+    <c:out value="${sessionScope.login_employee.name}" />
+    <br /><br />
 
-<label for="name">氏名</label><br />
-<c:out value="${sessionScope.login_employee.name}" />
-<br /><br />
+    <label for="comment_date">日付</label><br />
+    <input class="form_box" type="date" name="comment_date" value="<fmt:formatDate value='${comment.comment_date}' pattern='yyyy-MM-dd' />" />
+    <br /><br />
 
-<label for="content">内容</label><br />
-<textarea name="content" rows="10" cols="50">${comment.content}</textarea>
-<br /><br />
+    <label for="content">内容</label><br />
+    <textarea class="form_box" name="content" rows="10" cols="50">${comment.content}</textarea>
+    <br /><br />
 
-<input type="hidden" name="report_id" value="${comment.report.id}" />
-<input type="hidden" name="comment_id" value="${comment.id}" />
-<input type="hidden" name="_token" value="${_token}" />
-<button type="submit">投稿</button>
+    <input type="hidden" name="report_id" value="${comment.report.id}" />
+    <input type="hidden" name="comment_id" value="${comment.id}" />
+    <input type="hidden" name="_token" value="${_token}" />
+
+    <button class="form_button" type="submit">
+        <c:choose>
+            <c:when test="${comment.content == null}">
+            投　　稿
+            </c:when>
+            <c:otherwise>
+            更　　新
+            </c:otherwise>
+        </c:choose>
+    </button>
+</div>

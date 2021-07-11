@@ -2,12 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
-        <h2>日報 新規登録ページ</h2>
+        <div class="report">
+            <h2>日報 新規登録ページ</h2>
 
-        <form method="POST" action="<c:url value='/reports/create' />" enctype="multipart/form-data">
-            <c:import url="_form.jsp" />
-        </form>
+            <form method="POST" action="<c:url value='/reports/create' />" enctype="multipart/form-data">
+                <c:import url="_form.jsp" />
+            </form>
 
-        <p><a href="<c:url value='/reports/index' />">一覧に戻る</a></p>
+            <p><a href="<c:url value='/reports/index' />">一覧に戻る</a></p>
+        </div>
     </c:param>
 </c:import>
