@@ -68,6 +68,7 @@ button {
 
 #footer {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 #flush_success {
@@ -166,6 +167,36 @@ h3 {
     font-size: larger;
 }
 
+
+/* 従業員 _form */
+
+.employee_form label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.employee_form  input {
+    width: 25%;
+}
+
+.employee_form button {
+    width: 25%;
+    margin: 10px 0;
+}
+
+
+/* 従業員新規投稿・編集ページ */
+
+.employee h2 {
+    font-size: 30px;
+    margin: 25px 0 30px 0;
+}
+
+#p01 {
+    margin-top: -25px;
+    margin-bottom: 35px;
+}
 
 /* 日報 _form */
 
@@ -344,18 +375,19 @@ hr {
 }
 
 
-/* 検索フォーム */
+/* 日報一覧 */
 
 .search_field {
     background-color: #f0f0f0;
     margin: 5px 0 15px 0;
+    border-top: 5px solid #333;
 }
 
 .search_header {
-    font-size: 25px;
+    font-size: 22px;
     padding-top: 5px;
     padding-left: 10px;
-    margin: 0 0 10px 0;
+    margin: 0 0 5px 0;
 }
 
 .search_wrapper {
@@ -370,9 +402,19 @@ hr {
     margin: 5px 0 15px 0;
 }
 
+.search_column label {
+    padding-left: 5px;
+}
+
 .search_box {
     width: 95%;
     margin: 5px;
+}
+
+.search_box:focus {
+    border: 2px solid #333;
+    z-index: 10;
+    outline: 0;
 }
 
 .button_wrapper {
@@ -405,3 +447,31 @@ hr {
 .search_submit_button:hover {
     background-color: #595959;
 }
+
+
+.report_index h2 {
+    display: inline-block;
+}
+
+
+/* 新規作成リンク */
+
+.p_report_new {
+    background-color: #333;
+    display: inline-block;
+    float: right;
+    padding: 8px 25px;
+}
+
+.a_report_new {
+    color: #ccc;
+}
+
+
+/* 日報トップページ */
+
+.toppage_index h3 {
+    display: inline-block;
+    padding-top: 30px;
+}
+

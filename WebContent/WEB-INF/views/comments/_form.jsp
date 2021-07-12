@@ -19,7 +19,7 @@
     <br /><br />
 
     <label for="content">内容</label><br />
-    <textarea class="form_box" name="content" rows="10" cols="50">${comment.content}</textarea>
+    <textarea class="form_box" name="content" rows="10" cols="50" placeholder="内容を入力してください。">${comment.content}</textarea>
     <br /><br />
 
     <input type="hidden" name="report_id" value="${comment.report.id}" />
